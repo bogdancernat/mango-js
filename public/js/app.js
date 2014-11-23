@@ -141,6 +141,7 @@ $(document).ready(function (e){
   worldInterval = setInterval(function moveWorld() {
     for(var obstacle in obstacles){
     // console.log(obstacles[key]);
+      
       $('#'+obstacle).css('left', parseFloat($('#'+obstacle).css('left')) - 0.8 +'px');
       if(parseInt($('#'+obstacle).css('left')) < 0) {
         $('#'+obstacle).remove();
@@ -175,6 +176,7 @@ $(document).ready(function (e){
       var $o = $('#'+rowObstacles[player.row][i]);
       var opos = $o.position();
       var playerPosition = $('.player').position();
+
       if(playerPosition.left + 50 >= opos.left
           && playerPosition.left + 25 <= opos.left + gridItemHeight) {
         // $o.addClass('active'); 
