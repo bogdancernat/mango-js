@@ -167,6 +167,8 @@ body{
 
 .status {
   width: 100%;
+  position: fixed;
+  bottom: 0px;
 }
 
 .ui-label {
@@ -180,10 +182,14 @@ body{
   height: 60px;
 }
 
-.enemy-ammo {
-  
+.logo {
+  display: block;
+  margin: 0 auto;
+  width: 30vw;
+  position: absolute;
+  left: 35vw;
+  top: 2vw;
 }
-
 @-webkit-keyframes obstacle {
   from { background-position: -(@tileSize * 4);}
   to { background-position: -(@tileSize * 9)}

@@ -324,7 +324,7 @@ $(document).ready(function (e){
 
   function resizePage() {
     $('.game-wrapper').css({
-      'margin-top': (window.innerHeight - 400 )/2 +'px'
+      'margin-top': (window.innerHeight - 400 )/1.7 +'px'
     });
   }
 
