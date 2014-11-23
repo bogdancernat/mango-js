@@ -141,7 +141,7 @@ $(document).ready(function (e){
   worldInterval = setInterval(function moveWorld() {
     for(var obstacle in obstacles){
     // console.log(obstacles[key]);
-      
+
       $('#'+obstacle).css('left', parseFloat($('#'+obstacle).css('left')) - 0.8 +'px');
       if(parseInt($('#'+obstacle).css('left')) < 0) {
         $('#'+obstacle).remove();
@@ -172,55 +172,59 @@ $(document).ready(function (e){
       }
     }
 
-    for(var i = 0; i < rowObstacles[player.row].length; i++){
-      var $o = $('#'+rowObstacles[player.row][i]);
-      var opos = $o.position();
-      var playerPosition = $('.player').position();
+    if(rowObstacles[player.row] != undefined){
+      for(var i = 0; i < rowObstacles[player.row].length; i++){
+        var $o = $('#'+rowObstacles[player.row][i]);
+        var opos = $o.position();
+        var playerPosition = $('.player').position();
 
-      if(playerPosition.left + 50 >= opos.left
-          && playerPosition.left + 25 <= opos.left + gridItemHeight) {
-        // $o.addClass('active'); 
-        // colided with obstacle    
+        if(playerPosition.left + 50 >= opos.left
+            && playerPosition.left + 25 <= opos.left + gridItemHeight) {
+          // $o.addClass('active'); 
+          // colided with obstacle    
 
-        player.points -= 75;
-        enemy.ammo += 1;
+          player.points -= 75;
+          enemy.ammo += 1;
 
-        updateEnemyAmmo();
-        updatePoints();
+          updateEnemyAmmo();
+          updatePoints();
 
-        rowObstacles[player.row].splice(i,1);
-        $o.addClass('danger');
+          rowObstacles[player.row].splice(i,1);
+          $o.addClass('danger');
 
-        setTimeout(function(){
-          $o.remove();
-        }, 200);
-        if(player.points < 0){
-          $('.player').addClass('dead');
-          player.dead = true;
-          clearInterval(worldInterval);
-          $('.ground').css({
-            '-webkit-animation-play-state' :'paused'
-          });
+          setTimeout(function(){
+            $o.remove();
+          }, 200);
+          if(player.points < 0){
+            $('.player').addClass('dead');
+            player.dead = true;
+            clearInterval(worldInterval);
+            $('.ground').css({
+              '-webkit-animation-play-state' :'paused'
+            });
+          }
+          break;
         }
-        break;
       }
     }
 
-    for(var i = 0; i < rowBullets[player.row].length; i++) {
-      var $b = $('#'+rowBullets[player.row][i]);
-      var bpos = $b.position();
-      
-      for(var j = 0; j < rowObstacles[player.row].length; j++) {
-        var $o = $('#'+rowObstacles[player.row][j]);
-        var opos = $o.position();
+    if(rowBullets[player.row] != undefined){
+      for(var i = 0; i < rowBullets[player.row].length; i++) {
+        var $b = $('#'+rowBullets[player.row][i]);
+        var bpos = $b.position();
+        
+        for(var j = 0; j < rowObstacles[player.row].length; j++) {
+          var $o = $('#'+rowObstacles[player.row][j]);
+          var opos = $o.position();
 
-        if(bpos.left >= opos.left 
-          && bpos.left <= opos.left + gridItemHeight) {
-          removeBullet($b.attr('id'));
-          rowObstacles[player.row].splice(j,1);
-          $o.remove();
-          player.points += 50;
-          updatePoints();
+          if(bpos.left >= opos.left 
+            && bpos.left <= opos.left + gridItemHeight) {
+            removeBullet($b.attr('id'));
+            rowObstacles[player.row].splice(j,1);
+            $o.remove();
+            player.points += 50;
+            updatePoints();
+          }
         }
       }
     }
@@ -288,6 +292,11 @@ $(document).ready(function (e){
     var bulletTop = parseInt($('#bullet'+bulletCont).css('top'));
     var br = Math.floor(bulletTop/gridItemHeight);
     
+    if(br>3) {
+      $('#bullet'+bulletCont).remove();
+      delete bullets['bullet'+bulletCont];
+      return false;
+    }
 
     rowBullets[br].push('bullet'+bulletCont);
 
