@@ -61,10 +61,13 @@ $(document).ready(function (e){
   // player shooting
   var playerShootInterval;
   $(document).mousedown(function (ev) {
-    // playerShootInterval = setInterval(function (){
-    //   playerShoot();
-    // }, 100);
-    playerShoot();
+    playerShootInterval = setInterval(function (){
+      if(player.points>1) {
+        playerShoot();
+        player.points -= 2;
+      }
+    }, 100);
+    // playerShoot();
   });
 
   $(document).mouseup(function (ev) {
