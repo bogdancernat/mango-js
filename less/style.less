@@ -1,0 +1,219 @@
+// Core variables and mixins
+@import "./bootstrap/variables.less";
+@import "./bootstrap/mixins.less";
+
+// Reset
+@import "./bootstrap/normalize.less";
+@import "./bootstrap/print.less";
+
+// Core CSS
+@import "./bootstrap/scaffolding.less";
+@import "./bootstrap/type.less";
+@import "./bootstrap/code.less";
+@import "./bootstrap/grid.less";
+@import "./bootstrap/tables.less";
+@import "./bootstrap/forms.less";
+@import "./bootstrap/buttons.less";
+
+// Components
+@import "./bootstrap/component-animations.less";
+@import "./bootstrap/glyphicons.less";
+@import "./bootstrap/dropdowns.less";
+@import "./bootstrap/button-groups.less";
+@import "./bootstrap/input-groups.less";
+@import "./bootstrap/navs.less";
+@import "./bootstrap/navbar.less";
+@import "./bootstrap/breadcrumbs.less";
+@import "./bootstrap/pagination.less";
+@import "./bootstrap/pager.less";
+@import "./bootstrap/labels.less";
+@import "./bootstrap/badges.less";
+@import "./bootstrap/jumbotron.less";
+@import "./bootstrap/thumbnails.less";
+@import "./bootstrap/alerts.less";
+@import "./bootstrap/progress-bars.less";
+@import "./bootstrap/media.less";
+@import "./bootstrap/list-group.less";
+@import "./bootstrap/panels.less";
+@import "./bootstrap/wells.less";
+@import "./bootstrap/close.less";
+
+// Components w/ JavaScript
+@import "./bootstrap/modals.less";
+@import "./bootstrap/tooltip.less";
+@import "./bootstrap/popovers.less";
+@import "./bootstrap/carousel.less";
+
+// Utility classes
+@import "./bootstrap/utilities.less";
+@import "./bootstrap/responsive-utilities.less";
+
+@maxWidth: 1200px;
+@tileSize: (@maxWidth - 150px)/10;
+@playerWidth: 110px;
+@playerDeadWidth: 200px;
+
+body{
+  background: black;
+  pointer-events: none;
+
+  -webkit-user-select: none;
+     -moz-user-select: -moz-none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.game-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: @maxWidth;
+  margin: 0 auto;
+  height: @tileSize * 4;
+  overflow: hidden;
+}
+
+.ground {
+  height: @tileSize * 4;
+  width: 100%;
+  background: url('../img/ground_texture.png');
+  // background-repeat: repeat-x;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-position: 0px 0px;
+  -webkit-animation: background-anim 15s linear infinite;
+}
+
+.player {
+  .size(110px, @tileSize);
+  pointer-events: none;
+  position: absolute;
+  z-index: 100000;
+  background-image: url('../img/jack_hammer.png');
+  background-position: 0px 0px;
+  background-repeat: repeat-x;
+  -webkit-animation: animate-walking 0.5s steps(5, end) infinite;
+
+  &.shooting {
+    -webkit-animation: animate-shooting 0.5s steps(3, end) infinite;
+  }
+
+  &.dead {
+    .size(@playerDeadWidth, @playerDeadWidth);
+    transform: translate((@playerWidth - @playerDeadWidth)/2, (100px - @playerDeadWidth)/2);
+    background-image: url('../img/death.png');
+    background-position: top right;
+    background-repeat: repeat-x;
+    -webkit-animation-play-state: paused;
+    // -webkit-animation: animate-death 2s steps(6, end) forwards;
+  }
+}
+
+.bullet {
+  .size(25px, 5px);
+  display: block;
+  position: absolute;
+  background-image: url('../img/bullet.png');
+  top: 0px; left: 0px;
+}
+
+.obstacle{
+  .square(@tileSize);
+  position: absolute;
+  background-image: url('../img/atk_shield.png');
+  background-position:  0px;
+  background-size: auto @tileSize;
+  
+  -webkit-animation: obstacle 1s steps(5, end) infinite;
+
+
+  &.active {
+    background: rgba(0,0,0,0.8);
+  }
+
+  &.danger {
+    background: rgba(170,10,10,0.8);
+  }
+}
+
+.grid-wrapper {
+  pointer-events: none;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: @tileSize * 4;
+  width: @tileSize * 10;
+  
+  .grid-row{
+    height: @tileSize;
+    width: @tileSize * 10;
+  }
+
+  .grid-item {
+    .square(@tileSize);
+    background-color: rgba(255,200,0,0.1);
+    display: block;
+    float: left;
+    box-sizing: border-box;
+    text-align: center;
+    line-height: @tileSize;
+    color: rgba(255,255,255,0.4);
+    font-size: 17px;
+    font-weight: 300;
+    &.active{
+      background-color: rgba(255,200,0,0.5);
+    }
+  }
+}
+
+.status {
+  width: 100%;
+}
+
+.ui-label {
+  sidplay: block;
+  padding: 20px 40px;
+  background: rgba(255,255,255,0.3);
+  color: white;
+  font-size: 21px;
+  font-weight: 300;
+  text-transform: uppercase;
+  height: 60px;
+}
+
+.enemy-ammo {
+  
+}
+
+@-webkit-keyframes obstacle {
+  from { background-position: -(@tileSize * 4);}
+  to { background-position: -(@tileSize * 9)}
+}
+
+@-webkit-keyframes animate-walking {
+    from { background-position: 0px; }
+    to { background-position: -(@playerWidth*5); }
+}
+
+@-webkit-keyframes animate-shooting {
+    from { background-position: -(@playerWidth*5); }
+    to { background-position: -(@playerWidth*8); }
+}
+
+@-webkit-keyframes animate-dead {
+    from { background-position: 0px; }
+    to { background-position: -(@playerDeadWidth * 6); }
+}
+
+@-webkit-keyframes obstacle-birth {
+  from { background-position: 0px; }
+  to { background-position: -(@tileSize * 3); }
+}
+
+@-webkit-keyframes obstacle-birth {
+  from { background-position: -(@tileSize * 3); }
+  to { background-position: -(@tileSize * 11); }
+}
+@-webkit-keyframes background-anim {
+  0% { background-position: 0px; }
+  100% { background-position: -256px; }
+}
