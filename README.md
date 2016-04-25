@@ -1,3 +1,7 @@
-# mango-js
+# Jack Hammer and the orbital nemesis
 
-Web game created at Ubisoft Hackathon
+### Play it here: [http://bogdancernat.github.io/mango-js/](http://bogdancernat.github.io/mango-js/)
+___
+
+Web game created at Ubisoft Hackathon with friends
+
